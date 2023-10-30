@@ -21,6 +21,7 @@
         <div class="form-group">
             <label for="eventName">Nom de l'Événement</label>
             <input type="text" class="form-control" id="eventName" required>
+            <p class="check" id="check-nom"></p>
         </div>
         <div class="form-group">
             <label for="dayOfWeek">Jour de la semaine</label>
@@ -41,6 +42,7 @@
         <div class="form-group">
             <label for="eventEndTime">Heure de Fin</label>
             <input type="time" class="form-control" id="eventEndTime" required>
+            <p class="check" id="check-hour-end"></p>
         </div>
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="allDay">
@@ -49,10 +51,11 @@
         <div class="form-group">
             <label for="eventDescription">Description</label>
             <textarea class="form-control" id="eventDescription" rows="3"></textarea>
+            <p class="check" id="check-desc"></p>
         </div>
         <div class="form-group">
             <label for="eventColor">Couleur de l'Événement</label>
-            <input type="color" class="form-control-lg" id="eventColor" style="width: 100%">
+            <input type="color" class="form-control-lg" id="eventColor" style="width: 100% " value="#0d6efd">
         </div>
         <br>
         <button type="submit" class="btn btn-primary">Créer Événement</button>

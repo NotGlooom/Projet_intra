@@ -1,3 +1,8 @@
 .calender {
     height: 600px;
 }
+
+.check {
+    color: #f54b4b;
+    font-weight: bold;
+}

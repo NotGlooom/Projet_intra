@@ -142,6 +142,16 @@ $(document).ready(function () {
             // Ajouter l'événement à la colonne
             scheduleColumn.append(newEvent);
 
+
+            // Vider les inputs
+            $("#eventName").val("");
+            $("#eventStartTime").val("");
+            $("#eventEndTime").val("");
+            $("#allDay").prop("checked", false);
+            $("#eventDesc").val("");
+            $("#eventColor").val("#0d6efd");
+
+
             return false;
         }
     }

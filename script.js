@@ -26,7 +26,7 @@ $(document).ready(function () {
 
     // Valider heure de fin
     $("#check-hour-end").hide();
-    let startError = true;
+    let endError = true;
     $("#eventEndTime").change(function () {
         validateEnd();
     })
@@ -62,20 +62,88 @@ $(document).ready(function () {
 
             if (endTime < startTime) {
                 $("#check-hour-end").show().html("L'heure de fin doit être supérieure à celle de début");
-                startError = false;
+                endError = false;
+                return false;
             } else {
                 $("#check-hour-end").hide();
             }
         }
     }
 
+    // Box Journée Complète
+    $("#allDay").change(function() {
+        if(this.checked) {
+            // Si la case est cochée, mettez 12:00 AM à 11:59 PM
+            $("#eventStartTime").val("00:00");
+            $("#eventEndTime").val("23:59");
+            $("#check-hour-end").hide();
+        } else {
+            // Si la case est décochée, réinitialisez les champs de temps
+            $("#eventStartTime").val("");
+            $("#eventEndTime").val("");
+            $("#check-hour-end").hide();
+        }
+    });
 
 
 
+    // Valider la description
+    $("#check-desc").hide();
+    let descError = true;
+    $("#eventDescription").keyup(function () {
+        validateDesc();
+    })
 
+    function validateDesc() {
+        let descValue = $("#eventDescription").val();
+        if (descValue.length > 50) {
+            $("#check-desc").show().html("La description ne peut excéder 50 charactères")
+            descError = false;
+            return false;
+        } else {
+            $("#check-desc").hide();
+        }
+    }
 
+    // Event soummettre
+    $("#submitBtn").click(validateForm);
 
+    function validateForm() {
+        validateNom();
+        validateEnd();
+        validateDesc();
+        if (nomError === true && endError === true && descError === true) {
+            // Récupérer les valeurs du formulaire
+            let nom = $("#eventName").val();
+            let startValue = $("#eventStartTime").val();
+            let endValue = $("#eventEndTime").val();
+            let description = $("#eventDescription").val();
+            let color = $("#eventColor").val();
 
+            // Créer un nouvel événement (élément div)
+            let newEvent = document.createElement("div");
+            newEvent.classList.add("event");
+            newEvent.style.backgroundColor = color; // Appliquer la couleur
+
+            // Remplir le contenu de l'événement
+            newEvent.innerHTML = `
+            <h3>${nom}</h3>
+            <p>Début : ${startValue}</p>
+            <p>Fin : ${endValue}</p>
+            <p>Description : ${description}</p>
+        `;
+
+            // Récupérer le jour de la semaine du formulaire
+            let dayOfWeek = $("#dayOfWeek").val();
+
+            // Sélectionner la colonne appropriée dans l'horaire
+            let scheduleColumn = $(`.calender .col:contains(${dayOfWeek})`);
+
+            // Ajouter l'événement à la colonne
+            scheduleColumn.append(newEvent);
+            console.log("Success")
+        }
+    }
 
 })
 

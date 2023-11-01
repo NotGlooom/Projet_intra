@@ -123,7 +123,7 @@ $(document).ready(function () {
             // Créer un nouvel événement (élément div)
             let newEvent = document.createElement("div");
             newEvent.classList.add("event");
-            newEvent.style.backgroundColor = color; // Appliquer la couleur
+            newEvent.style.border = `5px solid ${color}`; // Appliquer la couleur
 
             // Remplir le contenu de l'événement
             newEvent.innerHTML = `
@@ -141,7 +141,8 @@ $(document).ready(function () {
 
             // Ajouter l'événement à la colonne
             scheduleColumn.append(newEvent);
-            console.log("Success")
+
+            return false;
         }
     }
 

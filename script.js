@@ -20,6 +20,7 @@ $(document).ready(function () {
             return false;
         } else {
             $("#check-nom").hide();
+            nomError = true;
         }
     }
 
@@ -39,7 +40,7 @@ $(document).ready(function () {
         $("#allDay").prop("checked", false);
     })
 
-
+    //Fonction pour convertir l'heure en 24 pour facilité la comparaison.
     function convertTo24Hour(time, period) {
         let [hours, minutes] = time.split(":");
         hours = parseInt(hours);
@@ -54,12 +55,13 @@ $(document).ready(function () {
         return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
     }
 
+    // Validation pour vérifier que l'heure de fin est bien après l'heure de début.
     function validateEnd() {
         let startValue = $("#eventStartTime").val();
         let endValue = $("#eventEndTime").val();
 
         if (startValue && endValue) {
-            // Extract the period from the time string
+            // Extraire la période, soit AM ou PM
             let startPeriod = startValue.split(" ")[1];
             let endPeriod = endValue.split(" ")[1];
 
@@ -75,6 +77,7 @@ $(document).ready(function () {
                 return false;
             } else {
                 $("#check-hour-end").hide();
+                endError = true;
             }
         }
     }
@@ -103,6 +106,7 @@ $(document).ready(function () {
         validateDesc();
     })
 
+    // Validation de la description
     function validateDesc() {
         let descValue = $("#eventDescription").val();
         if (descValue.length > 50) {
@@ -111,12 +115,14 @@ $(document).ready(function () {
             return false;
         } else {
             $("#check-desc").hide();
+            descError = true;
         }
     }
 
-
+    // Event listener pour le bouton submit
     $("#submitBtn").click(validateForm)
 
+    // Fonction qui vérifie que tous les champs n'ont pas d'erreurs, puis append l'événement dans l'horaire.
     function validateForm(event) {
         event.preventDefault();
         console.log("I prevented the reload")
@@ -141,7 +147,7 @@ $(document).ready(function () {
             <h3>${nom}</h3>
             <p>Début : ${startValue}</p>
             <p>Fin : ${endValue}</p>
-            <p>Description : ${description}</p>
+            <p>Desc : ${description}</p>
         `;
 
             // Récupérer le jour de la semaine du formulaire

@@ -24,6 +24,44 @@ $(document).ready(function () {
         }
     }
 
+    // Valider qu'une heure de début à été entré
+    let startTimeError = true;
+    $("#check-hour-start").hide();
+    $("#eventStartTime").change(function () {
+        validateStartTime();
+    })
+
+    function validateStartTime() {
+        let startTimeValue = $("#eventStartTime").val();
+        if (startTimeValue.trim() === "") {
+            $("#check-hour-start").show().html("**Veuillez entrer une heure de début");
+            startTimeError = false;
+            return false;
+        } else {
+            $("#check-hour-start").hide();
+            startTimeError = true;
+        }
+    }
+
+    // Valider qu'une heure de fin à été entré
+    let endTimeError = true;
+    $("#check-hour-end").hide();
+    $("#eventEndTime").change(function () {
+        validateEndTime();
+    })
+
+    function validateEndTime() {
+        let endTimeValue = $("#eventEndTime").val();
+        if (endTimeValue.trim() === "") {
+            $("#check-hour-end").show().html("**Veuillez entrer une heure de fin");
+            endTimeError = false;
+            return false;
+        } else {
+            $("#check-hour-end").hide();
+            endTimeError = true;
+        }
+    }
+
 
     // Valider heure de fin
     $("#check-hour-end").hide();
@@ -88,12 +126,13 @@ $(document).ready(function () {
             // Si la case est cochée, mettez 12:00 AM à 11:59 PM
             $("#eventStartTime").val("00:00");
             $("#eventEndTime").val("23:59");
+            // Cacher les messages d'erreurs si jamais ils étaient visibles.
+            $("#check-hour-start").hide();
             $("#check-hour-end").hide();
         } else {
             // Si la case est décochée, réinitialisez les champs de temps
             $("#eventStartTime").val("");
             $("#eventEndTime").val("");
-            $("#check-hour-end").hide();
         }
     });
 
@@ -127,9 +166,11 @@ $(document).ready(function () {
         event.preventDefault();
         console.log("I prevented the reload")
         validateNom();
+        validateStartTime();
+        validateEndTime();
         validateEnd();
         validateDesc();
-        if (nomError === true && endError === true && descError === true) {
+        if (nomError === true && endError === true && startTimeError === true && endTimeError === true && descError === true) {
             // Récupérer les valeurs du formulaire
             let nom = $("#eventName").val();
             let startValue = $("#eventStartTime").val();

@@ -31,6 +31,15 @@ $(document).ready(function () {
         validateEnd();
     })
 
+    // Automatiquement Uncheck allday
+    $("#eventEndTime").change(function () {
+        $("#allDay").prop("checked", false);
+    })
+    $("#eventStartTime").change(function () {
+        $("#allDay").prop("checked", false);
+    })
+
+
     function convertTo24Hour(time, period) {
         let [hours, minutes] = time.split(":");
         hours = parseInt(hours);
@@ -105,10 +114,12 @@ $(document).ready(function () {
         }
     }
 
-    // Event soummettre
-    $("#submitBtn").click(validateForm);
 
-    function validateForm() {
+    $("#submitBtn").click(validateForm)
+
+    function validateForm(event) {
+        event.preventDefault();
+        console.log("I prevented the reload")
         validateNom();
         validateEnd();
         validateDesc();
@@ -142,19 +153,37 @@ $(document).ready(function () {
             // Ajouter l'événement à la colonne
             scheduleColumn.append(newEvent);
 
+            // Appeler la fonction pour vider les champs
+            clearFormFields();
 
-            // Vider les inputs
-            $("#eventName").val("");
-            $("#eventStartTime").val("");
-            $("#eventEndTime").val("");
-            $("#allDay").prop("checked", false);
-            $("#eventDesc").val("");
-            $("#eventColor").val("#0d6efd");
-
+            // Faire apparaitre le bouton suprimmer
+            $("#resetEvents").show();
 
             return false;
         }
     }
 
+    function clearFormFields() {
+        // Remplacez ces sélecteurs par ceux correspondant à vos champs du formulaire
+        $("#eventName").val("");
+        $("#eventStartTime").val("");
+        $("#eventEndTime").val("");
+        $("#eventDescription").val("");
+        $("#eventColor").val("#0d6efd");
+        $("#allDay").prop("checked", false);
+    }
+
+    // Event listener pour le Bouton reset events
+    $("#resetEvents").click(function() {
+        // Clear all events
+        $(".event").remove();
+
+        // Hide the reset button again
+        $(this).hide();
+    });
+
+
 })
+
+
 

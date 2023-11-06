@@ -1,9 +1,11 @@
-.calender {
-    height: 600px;
-}
 
 .black-border {
-    border: 1px solid #000000;
+    background-color: white;
+    border: 1px solid black;
+    min-height: 100px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    max-height: 600px;
 }
 
 .check {
@@ -11,20 +13,10 @@
     font-weight: bold;
 }
 
-.delete-event {
-    color: red;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 16px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: none;
-}
 
 .event {
     background-color: #ffffff;
-    border: 1px solid #cccccc;
     padding: 10px;
     margin-bottom: 10px;
 }
+
